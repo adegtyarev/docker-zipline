@@ -51,6 +51,7 @@ RUN     pip3 install --no-cache-dir -e .
 
 RUN     apk del --no-cache .build-deps .hdf5-dev && \
         apk add --no-cache \
+            freetype \
             openblas \
             libstdc++ \
             python3 && \
