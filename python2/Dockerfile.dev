@@ -42,13 +42,13 @@ RUN     tar -vxzf zipline.tar.gz && \
 
 WORKDIR /src/zipline
 
-RUN     pip install --no-cache-dir \
+RUN     pip install -v --no-cache-dir \
             -r etc/requirements.txt \
             -r etc/requirements_blaze.txt \
             -r etc/requirements_dev.txt  \
             -r etc/requirements_talib.txt
 
-RUN     pip install --no-cache-dir -e .
+RUN     pip install -v --no-cache-dir -e .
 
 RUN     apk del --no-cache .build-deps .hdf5-dev && \
         apk add --no-cache \
