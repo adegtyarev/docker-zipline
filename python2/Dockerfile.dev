@@ -52,9 +52,11 @@ RUN     pip install --no-cache-dir -e .
 
 RUN     apk del --no-cache .build-deps .hdf5-dev && \
         apk add --no-cache \
-            openblas \
+            freetype \
             libstdc++ \
-            py-pip python2 && \
+            openblas \
+            py-pip \
+            python2 && \
         apk add --no-cache \
             --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
             hdf5

@@ -1,0 +1,18 @@
+language: generic
+
+sudo: required
+
+services:
+  - docker
+
+jobs:
+  include:
+    - stage: build python2 docker images
+    - script: docker build -t zipline:latest -f python2/Dockerfile .
+    - script: docker build -t zipline:talib -f python2/Dockerfile.talib .
+    - script: docker build -t zipline:dev -f python2/Dockerfile.dev .
+
+    - stage: build python3 docker images
+    - script: docker build -t zipline:latest -f python3/Dockerfile .
+    - script: docker build -t zipline:talib -f python3/Dockerfile.talib .
+    - script: docker build -t zipline:dev -f python3/Dockerfile.dev .
