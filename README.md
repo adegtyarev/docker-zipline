@@ -3,8 +3,9 @@
 A Docker image for [Zipline](https://github.com/quantopian/zipline), a Pythonic algorithmic
 trading library
 
-
 ## Software specification
+
+[![Build Status](https://travis-ci.org/adegtyarev/docker-zipline.svg?branch=master)](https://travis-ci.org/adegtyarev/docker-zipline)
 
 * Base image: Alpine
 
