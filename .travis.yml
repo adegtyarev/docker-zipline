@@ -7,12 +7,14 @@ services:
 
 jobs:
   include:
-    - stage: build python2 docker images
+    - stage: build python2 images
+    - script: docker build -t zipline:dev -f python2/Dockerfile.dev .
+    - script: docker build -t zipline:jupyter -f python2/Dockerfile.jupyter .
     - script: docker build -t zipline:latest -f python2/Dockerfile .
     - script: docker build -t zipline:talib -f python2/Dockerfile.talib .
-    - script: docker build -t zipline:dev -f python2/Dockerfile.dev .
 
-    - stage: build python3 docker images
+    - stage: build python3 images
+    - script: docker build -t zipline:dev -f python3/Dockerfile.dev .
+    - script: docker build -t zipline:jupyter -f python3/Dockerfile.jupyter .
     - script: docker build -t zipline:latest -f python3/Dockerfile .
     - script: docker build -t zipline:talib -f python3/Dockerfile.talib .
-    - script: docker build -t zipline:dev -f python3/Dockerfile.dev .
