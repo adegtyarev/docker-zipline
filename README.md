@@ -101,6 +101,9 @@ A secured Jupyter notebook should be ready to start now:
         -v zipline-certs:/etc/letsencrypt \
         adegtyarev/zipline:jupyter notebook-ssl
 
+Note that a port to open in a browser has changed from 80 (HTTP) to 443
+(HTTPS).
+
 
 ### Using as base image
 
