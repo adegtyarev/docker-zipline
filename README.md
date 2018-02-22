@@ -11,7 +11,7 @@ A collection of [Zipline](https://github.com/quantopian/zipline) images.
 * Pre-built images:
     - Base image with Zipline algorithmic trading library
     - Image with Zipline & [TA-lib](http://ta-lib.org/) (image tag: `talib`)
-    - Image for Zipline development (image tag `dev`)
+    - Image for Zipline development (image tag: `dev`)
     - Research image with dev Zipline & [Jupyter](http://jupyter.org/) (image tag: `jupyter`)
 
 * Python support: 2.7, 3.5
