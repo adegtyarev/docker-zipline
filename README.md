@@ -65,9 +65,9 @@ will need a volume to store notebooks permanently:
         -v zipline-notes:/notes \
         adegtyarev/zipline:jupyter
 
-This will start on port 80 a Jupyter HTTP-server with Zipline installed and
-notes volume attached to `/notes` directory which eventually is a chroot
-directory for the server.  You can then connect to using web browser.
+This will start a Jupyter HTTP-server with Zipline installed and notes volume
+attached to a directory which eventually is a chroot directory for the server.
+You can then connect to port 80 using a web browser.
 
 ### Secure notebook with HTTPS
 
@@ -76,6 +76,11 @@ It is easy to secure your research environment by using SSL certificates from
 certificates:
 
     docker volume create --name zipline-certs
+
+Run the following dummy command to attach the new volume with pre-defined
+permissions on directories inside /etc/letsencrypt:
+
+    docker run --rm -v zipline-certs:/etc/letsencrypt adegtyarev/zipline:jupyter true
 
 Make sure you have port 80/tcp open to the outside world so that LE could
 connect to run a verification procedure.  Use an official image of
@@ -87,7 +92,7 @@ connect to run a verification procedure.  Use an official image of
     docker run --rm -p 80:80 -v zipline-certs:/etc/letsencrypt certbot/certbot \
         certonly --standalone -d $SSL_HOSTNAME --agree-tos -m $SSL_EMAIL --non-interactive
 
-Then a secured Jupyter notebook should be ready to run:
+A secured Jupyter notebook should be ready to start now:
 
     docker run --rm -p 443:8888 \
         -e SSL_HOSTNAME=$SSL_HOSTNAME \
