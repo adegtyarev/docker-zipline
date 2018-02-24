@@ -16,7 +16,7 @@ RUN     apk add --no-cache --virtual .build-deps \
             /etc/letsencrypt/archive \
             /notes
 
-COPY    docker-entrypoint.sh /bin/
+COPY    ./docker-entrypoint.sh /bin/
 
 USER    $ZIPLINE_USER
 
