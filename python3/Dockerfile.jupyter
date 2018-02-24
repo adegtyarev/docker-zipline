@@ -16,7 +16,7 @@ RUN     apk add --no-cache --virtual .build-deps \
             /etc/letsencrypt/archive \
             /notes
 
-COPY    ./docker-entrypoint.sh /bin/
+COPY    scripts/docker-entrypoint.sh /
 
 USER    $ZIPLINE_USER
 
@@ -24,6 +24,6 @@ WORKDIR /notes
 
 VOLUME  ["$ZIPLINE_ROOT", "/notes", "/etc/letsencrypt"]
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD     ["notebook"]
