@@ -1,64 +1,27 @@
-FROM    alpine:3.5
-
-ENV     ZIPLINE_REF master
+FROM    adegtyarev/zipline:latest
 
 ENV     TALIB_REF 0.4.0
+
+USER    root
 
 RUN     apk add --no-cache --virtual .build-deps \
             build-base \
             ca-certificates \
-            gfortran \
-            openblas-dev \
+            curl \
             python3-dev && \
-        apk add --no-cache --virtual .hdf5-dev \
-            --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
-            hdf5-dev
-
-RUN     ln -s /usr/include/locale.h /usr/include/xlocale.h
-
-WORKDIR /src
-
-ADD     https://downloads.sourceforge.net/project/ta-lib/ta-lib/$TALIB_REF/ta-lib-$TALIB_REF-src.tar.gz \
-            ta-lib-src.tar.gz
-
-RUN     tar -vxzf ta-lib-src.tar.gz && \
-        cd ta-lib && \
+        curl -s -L -o /src/ta-lib-src.tar.gz \
+            https://downloads.sourceforge.net/project/ta-lib/ta-lib/$TALIB_REF/ta-lib-$TALIB_REF-src.tar.gz && \
+        tar -C /src -vxzf /src/ta-lib-src.tar.gz && \
+        cd /src/ta-lib && \
         ./configure --prefix=/usr && \
         make install && \
         cd .. && \
-        rm -vr ta-lib ta-lib-src.tar.gz
+        rm -vr ta-lib ta-lib-src.tar.gz && \
+        pip3 install \
+            --no-cache-dir \
+            --no-compile \
+            -r /src/zipline/etc/requirements_talib.txt && \
+        apk del --no-cache \
+            .build-deps
 
-ADD     https://github.com/quantopian/zipline/archive/$ZIPLINE_REF.tar.gz \
-            zipline.tar.gz
-
-RUN     tar -vxzf zipline.tar.gz && \
-        mv -v zipline-$ZIPLINE_REF zipline && \
-        rm -v zipline.tar.gz
-
-WORKDIR /src/zipline
-
-RUN     pip3 install --no-cache-dir \
-            -r etc/requirements.txt \
-            -r etc/requirements_talib.txt
-
-RUN     pip3 install --no-cache-dir -e .
-
-RUN     apk del --no-cache .build-deps .hdf5-dev && \
-        apk add --no-cache \
-            openblas \
-            libstdc++ \
-            python3 && \
-        apk add --no-cache \
-            --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
-            hdf5
-
-ENV     ZIPLINE_ROOT /zipline
-
-RUN     addgroup zipline && \
-            adduser -D -h $ZIPLINE_ROOT -s /sbin/nologin -G zipline zipline
-
-USER    zipline
-
-VOLUME  $ZIPLINE_ROOT
-
-CMD     zipline
+USER    $ZIPLINE_USER

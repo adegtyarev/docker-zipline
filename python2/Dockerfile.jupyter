@@ -6,22 +6,24 @@ RUN     apk add --no-cache --virtual .build-deps \
             build-base \
             py-pip \
             python2-dev && \
-        pip install --no-cache-dir \
+        pip install \
+            --no-cache-dir \
+            --no-compile \
             jupyter && \
         apk del --no-cache \
             .build-deps && \
-        install -v -d -o zipline -g zipline \
+        install -v -d -o $ZIPLINE_USER -g $ZIPLINE_GROUP \
             /etc/letsencrypt/live \
             /etc/letsencrypt/archive \
             /notes
 
 COPY    docker-entrypoint.sh /
 
+USER    $ZIPLINE_USER
+
 WORKDIR /notes
 
-USER    zipline
-
-VOLUME  ["/zipline", "/notes", "/etc/letsencrypt"]
+VOLUME  ["$ZIPLINE_ROOT", "/notes", "/etc/letsencrypt"]
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
