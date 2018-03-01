@@ -5,16 +5,23 @@ sudo: required
 services:
   - docker
 
+stages:
+    - name: base images
+      if: branch = latest
+
+    - name: extra images
+
 jobs:
   include:
-    - stage: build python2 images
-    - script: docker build -t zipline:dev -f python2/Dockerfile.dev .
-    - script: docker build -t zipline:jupyter -f python2/Dockerfile.jupyter .
-    - script: docker build -t zipline:latest -f python2/Dockerfile .
-    - script: docker build -t zipline:talib -f python2/Dockerfile.talib .
+    - stage: base images
+    - script: docker build -f python3/Dockerfile python3
+    - script: docker build -f python2/Dockerfile python2
 
-    - stage: build python3 images
-    - script: docker build -t zipline:dev -f python3/Dockerfile.dev .
-    - script: docker build -t zipline:jupyter -f python3/Dockerfile.jupyter .
-    - script: docker build -t zipline:latest -f python3/Dockerfile .
-    - script: docker build -t zipline:talib -f python3/Dockerfile.talib .
+    - stage: extra images
+    - script: docker build -f python2/Dockerfile.dev python2
+    - script: docker build -f python2/Dockerfile.jupyter python2
+    - script: docker build -f python2/Dockerfile.talib python2
+
+    - script: docker build -f python3/Dockerfile.dev python3
+    - script: docker build -f python3/Dockerfile.jupyter python3
+    - script: docker build -f python3/Dockerfile.talib python3

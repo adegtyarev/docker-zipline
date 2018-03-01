@@ -1,20 +1,19 @@
-# docker zipline
+# A collection of Zipline images
 
-A collection of [Zipline](https://github.com/quantopian/zipline) images.
+- Base Docker image with [Zipline](https://github.com/quantopian/zipline) algorithmic trading library
+- Image with Zipline & [TA-lib](http://ta-lib.org/) libraries (image tag: `talib`)
+- Image for Zipline development (image tag: `dev`)
+- Research image with dev Zipline & [Jupyter](http://jupyter.org/) (image tag: `jupyter`)
+
 
 ## Software specification
 
-[![Build Status](https://travis-ci.org/adegtyarev/docker-zipline.svg?branch=master)](https://travis-ci.org/adegtyarev/docker-zipline)
-
-* Base image: Alpine
-
-* Pre-built images:
-    - Base image with Zipline algorithmic trading library
-    - Image with Zipline & [TA-lib](http://ta-lib.org/) (image tag: `talib`)
-    - Image for Zipline development (image tag: `dev`)
-    - Research image with dev Zipline & [Jupyter](http://jupyter.org/) (image tag: `jupyter`)
+* Base image: [Alpine Linux](https://alpinelinux.org/)
 
 * Python support: 2.7, 3.5
+
+[![Build Status](https://travis-ci.org/adegtyarev/docker-zipline.svg?branch=master)](https://travis-ci.org/adegtyarev/docker-zipline)
+
 
 ## Quick start
 
@@ -23,7 +22,7 @@ Create a new volume to store permanent data (usually referred to as
 
     docker volume create --name zipline-root
 
-Now you can run `zipline` command in a Docker container:
+Run `zipline` command in a Docker container:
 
     docker run --rm --volume zipline-root:/zipline adegtyarev/zipline
     Usage: zipline [OPTIONS] COMMAND [ARGS]...
@@ -37,12 +36,12 @@ Now you can run `zipline` command in a Docker container:
 
 ### Command line tool
 
-This image intended to be a drop-in replacement to `zipline` command in a
-Docker environment:
+This image basically intended to be a drop-in replacement to `zipline` command
+in a Docker environment:
 
     export ZIPLINE_CMD="docker run --rm -t -v zipline:/zipline adegtyarev/zipline zipline"
 
-So that you'll just replace `zipline` with `$ZIPLINE_CMD`:
+So that you just replace `zipline` with `$ZIPLINE_CMD`:
 
     $ZIPLINE_CMD ingest -b quantopian-quandl
     Downloading Bundle: quantopian-quandl  [####################################]  100%
@@ -55,8 +54,8 @@ Run an example trading algorithm:
 
 ### Research notebook
 
-The image is ready to start a research with Zipline in a Jupyter notebook.  You
-will need a volume to store notebooks permanently:
+The image with `jupyter` tag is ready to start a research with Zipline in a
+Jupyter notebook.  You will need a volume to store notebooks permanently:
 
     docker volume create --name zipline-notes
 
@@ -68,6 +67,7 @@ will need a volume to store notebooks permanently:
 This will start a Jupyter HTTP-server with Zipline installed and notes volume
 attached to a directory which eventually is a chroot directory for the server.
 You can then connect to port 80 using a web browser.
+
 
 ### Secure notebook with HTTPS
 
@@ -89,8 +89,10 @@ connect to run a verification procedure.  Use an official image of
     SSL_HOSTNAME=example.com    # Set this to the public domain name
     SSL_EMAIL=$USER@$HOSTNAME   # Email address for important notifications from LE
 
-    docker run --rm -p 80:80 -v zipline-certs:/etc/letsencrypt certbot/certbot \
-        certonly --standalone -d $SSL_HOSTNAME --agree-tos -m $SSL_EMAIL --non-interactive
+    docker run --rm -p 80:80 \
+        -v zipline-certs:/etc/letsencrypt \
+        certbot/certbot certonly --standalone \
+        -d $SSL_HOSTNAME --agree-tos -m $SSL_EMAIL --non-interactive
 
 A secured Jupyter notebook should be ready to start now:
 
@@ -105,12 +107,15 @@ Note that a port to open in a browser has changed from 80 (HTTP) to 443
 (HTTPS).
 
 
-### Using as base image
+### Using as a base image
 
-The image can also be used as a base image for Zipline-related tools:
+The image may also be used as a base Docker image for Zipline-related tools:
 
+```Dockerfile
     FROM    adegtyarev/zipline:latest
+
     RUN     ... # continue with zipline installed
+```
 
 
 ## Author
