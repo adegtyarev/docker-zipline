@@ -109,7 +109,7 @@ Note that a port to open in a browser has changed from 80 (HTTP) to 443
 
 ### Using as a base image
 
-The image may also be used as a base image for Zipline-related tools:
+The image may also be used as a base Docker image for Zipline-related tools:
 
 ```Dockerfile
     FROM    adegtyarev/zipline:latest
