@@ -1,6 +1,6 @@
-# A collection of [Zipline](https://github.com/quantopian/zipline) images.
+# A collection of Zipline images
 
-- Base Docker image with Zipline algorithmic trading library
+- Base Docker image with [Zipline](https://github.com/quantopian/zipline) algorithmic trading library
 - Image with Zipline & [TA-lib](http://ta-lib.org/) libraries (image tag: `talib`)
 - Image for Zipline development (image tag: `dev`)
 - Research image with dev Zipline & [Jupyter](http://jupyter.org/) (image tag: `jupyter`)
