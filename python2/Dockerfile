@@ -8,6 +8,8 @@ ENV     ZIPLINE_USER zipline
 
 ENV     ZIPLINE_GROUP zipline
 
+ENV     PYTHONUSERBASE /lib/zipline
+
 RUN     apk add --no-cache --virtual .build-deps \
             build-base \
             ca-certificates \
@@ -39,6 +41,7 @@ RUN     apk add --no-cache --virtual .build-deps \
         adduser -D -h $ZIPLINE_ROOT -s /sbin/nologin -G $ZIPLINE_GROUP \
             $ZIPLINE_USER && \
         chown -R $ZIPLINE_USER:$ZIPLINE_GROUP /src && \
+        install -v -d -o $ZIPLINE_USER -g $ZIPLINE_GROUP $PYTHONUSERBASE && \
         apk del --no-cache .build-deps .hdf5-dev && \
         apk add --no-cache \
             openblas \
