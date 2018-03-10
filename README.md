@@ -114,7 +114,20 @@ The image may also be used as a base Docker image for Zipline-related tools:
 ```Dockerfile
     FROM    adegtyarev/zipline:latest
 
-    RUN     ... # continue with zipline installed
+    COPY    --chown=zipline:zipline . /src/zipline-cool-feature
+
+    RUN     cd /src/zipline-cool-feature && \
+            pip3 install \
+                --no-cache-dir \
+                --user \
+                -r requirements.txt && \
+            pip3 install \
+                --no-cache-dir \
+                --user \
+                --editable \
+                .
+
+    ...     # continue with zipline & cool feature installed
 ```
 
 
