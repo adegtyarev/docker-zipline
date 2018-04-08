@@ -1,6 +1,6 @@
 FROM    alpine:latest
 
-ENV     ZIPLINE_REF master
+ENV     ZIPLINE_REF 1.1.1
 
 ENV     ZIPLINE_ROOT /zipline
 
