@@ -1,4 +1,4 @@
-FROM    adegtyarev/zipline:python2-dev
+FROM    adegtyarev/zipline:1.1.1-python2-dev
 
 USER    root
 

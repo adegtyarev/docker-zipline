@@ -1,4 +1,4 @@
-FROM    adegtyarev/zipline:talib
+FROM    adegtyarev/zipline:1.1.1-python3-talib
 
 USER    root
 
