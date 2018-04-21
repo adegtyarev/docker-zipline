@@ -1,6 +1,8 @@
 DOCKER_USERNAME?=$(USER)
 DOCKER_REPO?=$(DOCKER_USERNAME)
 PYTHON?=python3
+ZIPLINE_REF?=master
+TALIB_REF?=0.4.0
 
 all: build-zipline
 
@@ -15,19 +17,33 @@ docker-login:
 build-images: build-zipline-jupyter
 
 build-zipline:
-	docker build -t zipline:$(PYTHON) -f $(PYTHON)/Dockerfile $(PYTHON)
+	docker build \
+		--build-arg ZIPLINE_REF=$(ZIPLINE_REF) \
+		-t zipline:$(PYTHON) \
+		-f $(PYTHON)/Dockerfile \
+		$(PYTHON)
 	docker tag zipline:$(PYTHON) $(DOCKER_REPO)/zipline:$(PYTHON)
 
 build-zipline-talib: build-zipline-%: build-zipline
-	docker build -t zipline:$* -f $(PYTHON)/Dockerfile.$* $(PYTHON)
+	docker build \
+		--build-arg TALIB_REF=$(TALIB_REF) \
+		-t zipline:$* \
+		-f $(PYTHON)/Dockerfile.$* \
+		$(PYTHON)
 	docker tag zipline:$* $(DOCKER_REPO)/zipline:$(PYTHON)-$*
 
 build-zipline-dev: build-zipline-%: build-zipline-talib
-	docker build -t zipline:$* -f $(PYTHON)/Dockerfile.$* $(PYTHON)
+	docker build \
+		-t zipline:$* \
+		-f $(PYTHON)/Dockerfile.$* \
+		$(PYTHON)
 	docker tag zipline:$* $(DOCKER_REPO)/zipline:$(PYTHON)-$*
 
 build-zipline-jupyter: build-zipline-%: build-zipline-dev
-	docker build -t zipline:$* -f $(PYTHON)/Dockerfile.$* $(PYTHON)
+	docker build \
+		-t zipline:$* \
+		-f $(PYTHON)/Dockerfile.$* \
+		$(PYTHON)
 	docker tag zipline:$* $(DOCKER_REPO)/zipline:$(PYTHON)-$*
 
 push-images: \
