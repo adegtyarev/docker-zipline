@@ -3,25 +3,7 @@ language: generic
 sudo: required
 
 services:
-  - docker
+    - docker
 
-stages:
-    - name: base images
-      if: branch = latest
-
-    - name: extra images
-
-jobs:
-  include:
-    - stage: base images
-    - script: docker build -f python3/Dockerfile python3
-    - script: docker build -f python2/Dockerfile python2
-
-    - stage: extra images
-    - script: docker build -f python2/Dockerfile.dev python2
-    - script: docker build -f python2/Dockerfile.jupyter python2
-    - script: docker build -f python2/Dockerfile.talib python2
-
-    - script: docker build -f python3/Dockerfile.dev python3
-    - script: docker build -f python3/Dockerfile.jupyter python3
-    - script: docker build -f python3/Dockerfile.talib python3
+script:
+    - make build-images

@@ -1,4 +1,4 @@
-FROM    adegtyarev/zipline:latest
+FROM    adegtyarev/zipline:python3
 
 ENV     TALIB_REF 0.4.0
 
