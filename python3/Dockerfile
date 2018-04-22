@@ -12,6 +12,8 @@ ENV     ZIPLINE_GROUP zipline
 
 ENV     PYTHONUSERBASE /lib/zipline
 
+ENV     PATH $PYTHONUSERBASE/bin:$PATH
+
 RUN     apk add --no-cache --virtual .build-deps \
             build-base \
             ca-certificates \
@@ -55,8 +57,9 @@ RUN     apk add --no-cache --virtual .build-deps \
             .build-deps \
             .hdf5-dev && \
         apk add --no-cache \
-            openblas \
+            ca-certificates \
             libstdc++ \
+            openblas \
             python3 && \
         apk add --no-cache \
             --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
