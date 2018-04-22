@@ -5,8 +5,9 @@ PYTHON?=python3
 all: build-zipline
 
 docker-login:
-	test -n "$(DOCKER_PASSWORD)" || $(error Set $$DOCKER_PASSWORD env in order to make login)
-	echo "$(DOCKER_PASSWORD)" | docker login \
+	@test -n "$(DOCKER_PASSWORD)" || \
+		{ echo Set $$DOCKER_PASSWORD env in order to make login; false; }
+	@echo "$(DOCKER_PASSWORD)" | docker login \
 		--username "$(DOCKER_USERNAME)" \
 		--password-stdin \
 		$(DOCKER_SERVER)
