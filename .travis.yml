@@ -13,5 +13,9 @@ env:
 services:
     - docker
 
+# make docker-login build-images push-images
 script:
-    - make docker-login build-images push-images
+    - make build-zipline
+    - make build-zipline-dev
+    - make build-zipline-jupyter
+    - make build-zipline-talib
