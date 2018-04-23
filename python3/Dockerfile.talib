@@ -1,6 +1,8 @@
-FROM    adegtyarev/zipline:latest
+FROM    adegtyarev/zipline:python3
 
-ENV     TALIB_REF 0.4.0
+ARG     TALIB_REF
+
+ENV     TALIB_REF ${TALIB_REF:-0.4.0}
 
 USER    root
 

@@ -1,6 +1,8 @@
 FROM    alpine:latest
 
-ENV     ZIPLINE_REF master
+ARG     ZIPLINE_REF
+
+ENV     ZIPLINE_REF ${ZIPLINE_REF:-master}
 
 ENV     ZIPLINE_ROOT /zipline
 
@@ -9,6 +11,8 @@ ENV     ZIPLINE_USER zipline
 ENV     ZIPLINE_GROUP zipline
 
 ENV     PYTHONUSERBASE /lib/zipline
+
+ENV     PATH $PYTHONUSERBASE/bin:$PATH
 
 RUN     apk add --no-cache --virtual .build-deps \
             build-base \
@@ -37,15 +41,26 @@ RUN     apk add --no-cache --virtual .build-deps \
             --no-compile \
             --editable \
             /src/zipline && \
+        rm -vrf \
+            /src/zipline/build && \
         addgroup $ZIPLINE_GROUP && \
-        adduser -D -h $ZIPLINE_ROOT -s /sbin/nologin -G $ZIPLINE_GROUP \
+        adduser \
+            -D \
+            -G $ZIPLINE_GROUP \
+            -h $ZIPLINE_ROOT \
+            -s /sbin/nologin \
             $ZIPLINE_USER && \
-        chown -R $ZIPLINE_USER:$ZIPLINE_GROUP /src && \
-        install -v -d -o $ZIPLINE_USER -g $ZIPLINE_GROUP $PYTHONUSERBASE && \
-        apk del --no-cache .build-deps .hdf5-dev && \
+        chown -R $ZIPLINE_USER:$ZIPLINE_GROUP \
+            /src && \
+        install -v -d -o $ZIPLINE_USER -g $ZIPLINE_GROUP \
+            $PYTHONUSERBASE && \
+        apk del --no-cache \
+            .build-deps \
+            .hdf5-dev && \
         apk add --no-cache \
-            openblas \
+            ca-certificates \
             libstdc++ \
+            openblas \
             py-pip \
             python2 && \
         apk add --no-cache \
