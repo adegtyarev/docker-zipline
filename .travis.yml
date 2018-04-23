@@ -18,13 +18,17 @@ script:
     - make build-zipline-talib
     - make build-zipline-dev
     - make build-zipline-jupyter
+    - make docker-login
 
 deploy:
     on:
         all_branches: true
         condition: $TRAVIS_BRANCH =~ ^master|stable$
     provider: script
-    script:
-        - make docker-login
-        - make push-images
-        - test "$PYTHON" != "python3" || make push-latest
+    script: make push-images
+
+    on:
+        all_branches: true
+        condition: $PYTHON = python3
+    provider: script
+    script: make push-latest
