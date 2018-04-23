@@ -21,14 +21,14 @@ script:
     - make docker-login
 
 deploy:
+    provider: script
     on:
         all_branches: true
         condition: $TRAVIS_BRANCH =~ ^master|stable$
-    provider: script
     script: make push-images
 
-    on:
-        all_branches: true
-        condition: $PYTHON = python3
     provider: script
+    on:
+        branch: master
+        condition: $PYTHON = python3
     script: make push-latest
