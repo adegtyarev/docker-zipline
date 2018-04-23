@@ -13,9 +13,18 @@ env:
 services:
     - docker
 
-# make docker-login build-images push-images
 script:
+    - make docker-login
     - make build-zipline
     - make build-zipline-dev
-    - make build-zipline-jupyter
     - make build-zipline-talib
+    - make build-zipline-jupyter
+    - make push-images
+    - test "$PYTHON" != "python3" || make push-latest
+
+deploy:
+    on:
+        branch: master
+    script:
+        - make push-images
+        - test "$PYTHON" != "python3" || make push-latest
