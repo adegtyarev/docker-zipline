@@ -16,16 +16,15 @@ RUN     apk add --no-cache --virtual .build-deps \
         install -v -d -o $ZIPLINE_USER -g $ZIPLINE_GROUP \
             /etc/letsencrypt/live \
             /etc/letsencrypt/archive \
-            /notes
+            /notes && \
+        jupyter contrib \
+            nbextension install --sys-prefix && \
+        jupyter nbextensions_configurator \
+            enable --sys-prefix
 
 COPY    docker-entrypoint.sh /bin/
 
 USER    $ZIPLINE_USER
-
-RUN     jupyter contrib \
-            nbextension install --user && \
-        jupyter nbextensions_configurator \
-            enable --user
 
 WORKDIR /notes
 
