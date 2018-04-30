@@ -93,5 +93,5 @@ push-aux-zipline: build-zipline
 push-aux-dev \
 push-aux-jupyter \
 push-aux-talib: push-aux-%: build-zipline-%
-	docker tag zipline:$(PYTHON)-$* $(DOCKER_REPO)/zipline:$(BRANCH)-$(PYTHON)-$*
+	docker tag zipline:$* $(DOCKER_REPO)/zipline:$(BRANCH)-$(PYTHON)-$*
 	docker push $(DOCKER_REPO)/zipline:$(BRANCH)-$(PYTHON)-$*
