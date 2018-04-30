@@ -1,18 +1,30 @@
 # A collection of Zipline images
 
 - Base Docker image with [Zipline](https://github.com/quantopian/zipline) algorithmic trading library
-- Image with Zipline & [TA-lib](http://ta-lib.org/) libraries (image tag: `talib`)
-- Image for Zipline development (image tag: `dev`)
-- Research image with dev Zipline & [Jupyter](http://jupyter.org/) (image tag: `jupyter`)
+- Image with Zipline & [TA-lib](http://ta-lib.org/) libraries
+- Image for Zipline development
+- Research image with dev Zipline & [Jupyter](http://jupyter.org/)
 
 
 ## Software specification
 
 * Base image: [Alpine Linux](https://alpinelinux.org/)
-
 * Python support: 2.7, 3.5
 
 [![Build Status](https://travis-ci.org/adegtyarev/docker-zipline.svg?branch=master)](https://travis-ci.org/adegtyarev/docker-zipline)
+
+
+Tag     | Layers & size
+---     | ---
+latest  | ![zipline:python3][python3.svg]
+talib   | ![zipline:python3-talib][python3-talib.svg]
+dev     | ![zipline:python3-dev][python3-dev.svg]
+jupyter | ![zipline:python3-jupyter][python3-jupyter.svg]
+
+[python3.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3.svg "Image size & number of layers"
+[python3-talib.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3-talib.svg "Image size & number of layers"
+[python3-dev.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3-dev.svg "Image size & number of layers"
+[python3-jupyter.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3-jupyter.svg "Image size & number of layers"
 
 
 ## Quick start
