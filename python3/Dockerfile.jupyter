@@ -34,3 +34,5 @@ VOLUME  ["$ZIPLINE_ROOT", "/notes", "/etc/letsencrypt"]
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 CMD     ["notebook"]
+
+EXPOSE  8888
