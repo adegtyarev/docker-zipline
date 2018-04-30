@@ -3,6 +3,7 @@ DOCKER_REPO?=$(DOCKER_USERNAME)
 PYTHON?=python3
 ZIPLINE_REF?=master
 TALIB_REF?=0.4.0
+BRANCH?=$(shell git symbolic-ref --short -q HEAD)
 
 all: build-zipline
 
@@ -58,6 +59,12 @@ push-latest: \
 	push-zipline-latest \
 	push-zipline-talib
 
+push-auxilary-images: \
+	push-aux-dev \
+	push-aux-jupyter \
+	push-aux-talib \
+	push-aux-zipline
+
 push-zipline: build-zipline
 	docker push $(DOCKER_REPO)/zipline:$(PYTHON)
 
@@ -78,3 +85,13 @@ push-zipline-dev push-zipline-talib push-zipline-jupyter: push-zipline-%: build-
 		{ echo Only used when $$PYTHON=python3 but got $(PYTHON) instead; false; }
 	docker tag zipline:$* $(DOCKER_REPO)/zipline:$*
 	docker push $(DOCKER_REPO)/zipline:$*
+
+push-aux-zipline: build-zipline
+	docker tag zipline:$(PYTHON) $(DOCKER_REPO)/zipline:$(BRANCH)-$(PYTHON)
+	docker push $(DOCKER_REPO)/zipline:$(BRANCH)-$(PYTHON)
+
+push-aux-dev \
+push-aux-jupyter \
+push-aux-talib: push-aux-%: build-zipline-%
+	docker tag zipline:$(PYTHON)-$* $(DOCKER_REPO)/zipline:$(BRANCH)-$(PYTHON)-$*
+	docker push $(DOCKER_REPO)/zipline:$(BRANCH)-$(PYTHON)-$*
