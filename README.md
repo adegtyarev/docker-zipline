@@ -9,17 +9,18 @@
 ## Software specification
 
 * Base image: [Alpine Linux](https://alpinelinux.org/)
-* Python support: 2.7, 3.5
+* Python support: 3.5 (default), 2.7
+* Images updated when the upstream code is updated
 
 [![Build Status](https://travis-ci.org/adegtyarev/docker-zipline.svg?branch=master)](https://travis-ci.org/adegtyarev/docker-zipline)
 
 
-Tag     | Layers & size
+Image   | Layers & size
 ---     | ---
-latest  | ![zipline:python3][python3.svg]
-talib   | ![zipline:python3-talib][python3-talib.svg]
-dev     | ![zipline:python3-dev][python3-dev.svg]
-jupyter | ![zipline:python3-jupyter][python3-jupyter.svg]
+adegtyarev/zipline:latest  | ![zipline:python3][python3.svg]
+adegtyarev/zipline:talib   | ![zipline:python3-talib][python3-talib.svg]
+adegtyarev/zipline:dev     | ![zipline:python3-dev][python3-dev.svg]
+adegtyarev/zipline:jupyter | ![zipline:python3-jupyter][python3-jupyter.svg]
 
 [python3.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3.svg "Image size & number of layers"
 [python3-talib.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3-talib.svg "Image size & number of layers"
