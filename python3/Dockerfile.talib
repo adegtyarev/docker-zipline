@@ -10,12 +10,14 @@ RUN     apk add --no-cache --virtual .build-deps \
             build-base \
             ca-certificates \
             curl \
+            file \
             python3-dev && \
         curl -s -L -o /src/ta-lib-src.tar.gz \
             https://downloads.sourceforge.net/project/ta-lib/ta-lib/$TALIB_REF/ta-lib-$TALIB_REF-src.tar.gz && \
         tar -C /src -vxzf /src/ta-lib-src.tar.gz && \
         cd /src/ta-lib && \
         ./configure --prefix=/usr && \
+        (make -j$(grep -c ^processor /proc/cpuinfo) || make ) && \
         make install && \
         cd .. && \
         rm -vr ta-lib ta-lib-src.tar.gz && \
