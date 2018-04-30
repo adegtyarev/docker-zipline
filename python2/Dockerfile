@@ -32,6 +32,7 @@ RUN     apk add --no-cache --virtual .build-deps \
         tar -C /src/ -vxzf /src/zipline.tar.gz && \
         rm -v /src/zipline.tar.gz && \
         mv -v /src/zipline-$ZIPLINE_REF /src/zipline && \
+        export NPY_NUM_BUILD_JOBS=$(getconf _NPROCESSORS_ONLN) && \
         pip install \
             --no-cache-dir \
             --no-compile \

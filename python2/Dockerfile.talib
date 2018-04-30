@@ -18,7 +18,7 @@ RUN     apk add --no-cache --virtual .build-deps \
         tar -C /src -vxzf /src/ta-lib-src.tar.gz && \
         cd /src/ta-lib && \
         ./configure --prefix=/usr && \
-        (make -j$(grep -c ^processor /proc/cpuinfo) || make ) && \
+        (make -j$(getconf _NPROCESSORS_ONLN) || make ) && \
         make install && \
         cd .. && \
         rm -vr ta-lib ta-lib-src.tar.gz && \
