@@ -15,8 +15,9 @@ env:
 
 before_script:
     - uname -a
+    - getconf _NPROCESSORS_ONLN
     - sed -e '/^$/,$d' /proc/cpuinfo
-    - grep -c processor /proc/cpuinfo
+    - docker version
 
 script:
     - make build-zipline
