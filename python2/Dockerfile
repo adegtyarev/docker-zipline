@@ -18,6 +18,7 @@ RUN     apk add --no-cache --virtual .build-deps \
             build-base \
             ca-certificates \
             curl \
+            findutils \
             gfortran \
             git \
             openblas-dev \
@@ -27,16 +28,16 @@ RUN     apk add --no-cache --virtual .build-deps \
             --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
             hdf5-dev && \
         ln -v -s /usr/include/locale.h /usr/include/xlocale.h && \
+        pip install --upgrade pip && \
         git clone \
             --single-branch \
             --branch $ZIPLINE_REF \
             https://github.com/quantopian/zipline.git /src/zipline.git && \
         cd /src/zipline.git && \
         export NPY_NUM_BUILD_JOBS=$(getconf _NPROCESSORS_ONLN) && \
-        pip install \
+        grep -v ^# etc/requirements.txt | xargs -t -n1 -P$(getconf _NPROCESSORS_ONLN) pip install \
             --no-cache-dir \
-            --no-compile \
-            -r etc/requirements.txt && \
+            --no-compile && \
         ZIPLINE_SRC=/src/zipline-$(python3 setup.py version |grep ^Version |awk '{print $2}') && \
         mkdir -v \
             $ZIPLINE_SRC && \
