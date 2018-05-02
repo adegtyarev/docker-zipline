@@ -45,6 +45,7 @@ RUN     apk add --no-cache --virtual .build-deps \
         git archive \
             --worktree-attributes \
             HEAD |tar -v -C $ZIPLINE_SRC -x && \
+        ln -v -s $ZIPLINE_SRC /src/zipline && \
         cd $ZIPLINE_SRC && \
         pip install \
             --no-cache-dir \
@@ -80,7 +81,7 @@ RUN     apk add --no-cache --virtual .build-deps \
 
 USER    $ZIPLINE_USER
 
-WORKDIR /src
+WORKDIR /src/zipline
 
 VOLUME  $ZIPLINE_ROOT
 
