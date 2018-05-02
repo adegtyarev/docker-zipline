@@ -52,7 +52,7 @@ RUN     apk add --no-cache --virtual .build-deps \
             --no-compile \
             --editable \
             . && \
-        rm -v -rf \
+        rm -rf \
             build \
             /src/zipline.git && \
         addgroup $ZIPLINE_GROUP && \

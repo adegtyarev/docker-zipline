@@ -21,7 +21,7 @@ RUN     apk add --no-cache --virtual .build-deps \
         (make -j$(getconf _NPROCESSORS_ONLN) || make ) && \
         make install && \
         cd .. && \
-        rm -vr ta-lib ta-lib-src.tar.gz && \
+        rm -r ta-lib ta-lib-src.tar.gz && \
         pip install \
             --no-cache-dir \
             --no-compile \
