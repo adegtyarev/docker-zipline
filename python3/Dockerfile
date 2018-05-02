@@ -19,30 +19,40 @@ RUN     apk add --no-cache --virtual .build-deps \
             ca-certificates \
             curl \
             gfortran \
+            git \
             openblas-dev \
             python3-dev && \
         apk add --no-cache --virtual .hdf5-dev \
             --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
             hdf5-dev && \
         ln -v -s /usr/include/locale.h /usr/include/xlocale.h && \
-        mkdir -v /src && \
-        curl -s -L -o /src/zipline.tar.gz \
-            https://github.com/quantopian/zipline/archive/$ZIPLINE_REF.tar.gz && \
-        tar -C /src/ -vxzf /src/zipline.tar.gz && \
-        rm -v /src/zipline.tar.gz && \
-        mv -v /src/zipline-$ZIPLINE_REF /src/zipline && \
+        git clone \
+            --single-branch \
+            --branch $ZIPLINE_REF \
+            https://github.com/quantopian/zipline.git /src/zipline.git && \
+        cd /src/zipline.git && \
         export NPY_NUM_BUILD_JOBS=$(getconf _NPROCESSORS_ONLN) && \
         pip3 install \
             --no-cache-dir \
             --no-compile \
-            -r /src/zipline/etc/requirements.txt && \
+            -r etc/requirements.txt && \
+        ZIPLINE_SRC=/src/zipline-$(python3 setup.py version |grep ^Version |awk '{print $2}') && \
+        mkdir -v \
+            $ZIPLINE_SRC && \
+        rm -v \
+            .gitattributes && \
+        git archive \
+            --worktree-attributes \
+            HEAD |tar -v -C $ZIPLINE_SRC -x && \
+        cd $ZIPLINE_SRC && \
         pip3 install \ 
             --no-cache-dir \
             --no-compile \
             --editable \
-            /src/zipline && \
-        rm -vrf \
-            /src/zipline/build && \
+            . && \
+        rm -v -rf \
+            build \
+            /src/zipline.git && \
         addgroup $ZIPLINE_GROUP && \
         adduser \
             -D \
@@ -68,7 +78,7 @@ RUN     apk add --no-cache --virtual .build-deps \
 
 USER    $ZIPLINE_USER
 
-WORKDIR /src/zipline
+WORKDIR /src
 
 VOLUME  $ZIPLINE_ROOT
 
