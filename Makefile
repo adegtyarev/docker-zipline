@@ -15,7 +15,7 @@ docker-login:
 		--password-stdin \
 		$(DOCKER_SERVER)
 
-build-images: build-zipline-jupyter
+build-images: build-zipline-jupyter build-zipline-jupyterlab
 
 build-zipline:
 	docker build \
@@ -40,7 +40,8 @@ build-zipline-dev: build-zipline-%: build-zipline-talib
 		$(PYTHON)
 	docker tag zipline:$* $(DOCKER_REPO)/zipline:$(PYTHON)-$*
 
-build-zipline-jupyter: build-zipline-%: build-zipline-dev
+build-zipline-jupyter \
+build-zipline-jupyterlab: build-zipline-%: build-zipline-dev
 	docker build \
 		-t zipline:$* \
 		-f $(PYTHON)/Dockerfile.$* \
@@ -51,17 +52,20 @@ push-images: \
 	push-zipline \
 	push-zipline-python-dev \
 	push-zipline-python-jupyter \
+	push-zipline-python-jupyterlab \
 	push-zipline-python-talib
 
 push-latest: \
 	push-zipline-dev \
 	push-zipline-jupyter \
+	push-zipline-jupyterlab \
 	push-zipline-latest \
 	push-zipline-talib
 
 push-auxilary-images: \
 	push-aux-dev \
 	push-aux-jupyter \
+	push-aux-jupyterlab \
 	push-aux-talib \
 	push-aux-zipline
 
@@ -70,6 +74,7 @@ push-zipline: build-zipline
 
 push-zipline-python-dev \
 push-zipline-python-jupyter \
+push-zipline-python-jupyterlab \
 push-zipline-python-talib: \
 	push-zipline-python-%: build-zipline-%
 	docker push $(DOCKER_REPO)/zipline:$(PYTHON)-$*
@@ -80,7 +85,11 @@ push-zipline-latest: push-zipline-%: build-zipline
 	docker tag zipline:$(PYTHON) $(DOCKER_REPO)/zipline:$*
 	docker push $(DOCKER_REPO)/zipline:$*
 
-push-zipline-dev push-zipline-talib push-zipline-jupyter: push-zipline-%: build-zipline-%
+push-zipline-dev \
+push-zipline-jupyter \
+push-zipline-jupyterlab \
+push-zipline-talib: \
+	push-zipline-%: build-zipline-%
 	test "$(PYTHON)" = "python3" || \
 		{ echo Only used when $$PYTHON=python3 but got $(PYTHON) instead; false; }
 	docker tag zipline:$* $(DOCKER_REPO)/zipline:$*
@@ -92,6 +101,7 @@ push-aux-zipline: build-zipline
 
 push-aux-dev \
 push-aux-jupyter \
+push-aux-jupyterlab \
 push-aux-talib: push-aux-%: build-zipline-%
 	docker tag zipline:$* $(DOCKER_REPO)/zipline:$(BRANCH)-$(PYTHON)-$*
 	docker push $(DOCKER_REPO)/zipline:$(BRANCH)-$(PYTHON)-$*

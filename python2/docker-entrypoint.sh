@@ -31,4 +31,26 @@ then
         $@
 fi
 
+if [ "$1" = 'lab' ]
+then
+    shift
+
+    exec jupyter lab \
+        --ip 0.0.0.0 \
+        --no-browser \
+        $@
+fi
+
+if [ "$1" = 'lab-ssl' ]
+then
+    shift
+
+    exec jupyter lab \
+        --certfile="${JUPYTER_CERTFILE}" \
+        --keyfile="${JUPYTER_KEYFILE}" \
+        --ip 0.0.0.0 \
+        --no-browser \
+        $@
+fi
+
 exec $@
