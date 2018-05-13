@@ -37,7 +37,7 @@ RUN     apk add --no-cache --virtual .build-deps \
             --no-cache-dir \
             --no-compile \
             -r etc/requirements.txt && \
-        ZIPLINE_SRC=/src/zipline-$(python3 setup.py version |grep ^Version |awk '{print $2}') && \
+        ZIPLINE_SRC=/src/zipline-$(python setup.py version |grep ^Version |awk '{print $2}') && \
         mkdir -v \
             $ZIPLINE_SRC && \
         rm -v \
