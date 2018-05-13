@@ -23,7 +23,7 @@ script:
     - make build-zipline
     - make build-zipline-talib
     - make build-zipline-dev
-    - make build-zipline-jupyter
+    - make -j build-zipline-jupyter build-zipline-jupyterlab
     - make docker-login
 
 deploy:
