@@ -14,6 +14,7 @@ RUN     apk add --no-cache --virtual .build-deps \
             jupyter \
             jupyter_contrib_nbextensions \
             jupyter_nbextensions_configurator && \
+        pip3 install --upgrade six && \
         apk del --no-cache \
             .build-deps && \
         install -v -d -o $ZIPLINE_USER -g $ZIPLINE_GROUP \
