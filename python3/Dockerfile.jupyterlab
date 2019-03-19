@@ -4,7 +4,9 @@ USER    root
 
 RUN     apk add --no-cache --virtual .build-deps \
             build-base \
-            python3-dev && \
+            linux-headers \
+            python3-dev \
+            zeromq-dev && \
         pip3 install --no-cache-dir --no-compile \
             jupyterlab && \
         apk del --no-cache \

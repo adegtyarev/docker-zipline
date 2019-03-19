@@ -6,7 +6,10 @@ RUN     apk add --no-cache --virtual .build-deps \
             build-base \
             libxml2-dev \
             libxslt-dev \
+            linux-headers \
             python3-dev && \
+        apk add --no-cache \
+            zeromq-dev && \
         pip3 install --no-cache-dir --no-compile \
             jupyter \
             jupyter_contrib_nbextensions \
