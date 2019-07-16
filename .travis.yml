@@ -7,7 +7,6 @@ services:
 
 env:
     matrix:
-        - PYTHON=python2
         - PYTHON=python3
     global:
         - DOCKER_USERNAME=adegtyarev

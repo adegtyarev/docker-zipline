@@ -13,7 +13,7 @@
 ## Software specification
 
 * Base image: [Alpine Linux][alpinelinux]
-* Python support: 3.5 (default), 2.7
+* Python support: 3.5
 * Images updated when the upstream code is updated
 
 [![Build Status](https://travis-ci.org/adegtyarev/docker-zipline.svg?branch=master)](https://travis-ci.org/adegtyarev/docker-zipline)
