@@ -1,0 +1,22 @@
+FROM    adegtyarev/zipline:debian-talib
+
+USER    root
+
+RUN     apt update && \
+        apt install -y \
+            build-essential \
+            git && \
+        pip3 install \
+            --no-cache-dir \
+            --no-compile \
+            -r etc/requirements_blaze.txt \
+            -r etc/requirements_dev.txt && \
+        rm -rf \
+            src && \
+        apt purge -y \
+            git \
+            build-essential && \
+        apt autoremove -y && \
+        apt clean
+
+USER    $ZIPLINE_USER

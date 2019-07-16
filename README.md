@@ -12,7 +12,7 @@
 
 ## Software specification
 
-* Base image: [Alpine Linux][alpinelinux]
+* Base image: [Alpine Linux][alpinelinux], [Debian GNU/Linux][debianlinux]
 * Python support: 3.5
 * Images updated when the upstream code is updated
 
@@ -28,6 +28,7 @@ adegtyarev/zipline:jupyter | ![zipline:python3-jupyter][python3-jupyter.svg]
 adegtyarev/zipline:jupyterlab | ![zipline:python3-jupyterlab][python3-jupyterlab.svg]
 
 [alpinelinux]: https://alpinelinux.org/
+[debianlinux]: https://www.debian.org/
 [python3.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3.svg "Image size & number of layers"
 [python3-talib.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3-talib.svg "Image size & number of layers"
 [python3-dev.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3-dev.svg "Image size & number of layers"

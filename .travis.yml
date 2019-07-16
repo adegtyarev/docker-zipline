@@ -8,6 +8,7 @@ services:
 env:
     matrix:
         - FLAVOR=python3
+        - FLAVOR=debian
     global:
         - DOCKER_USERNAME=adegtyarev
         - secure: HwjwaMXfofu50vG7nINzKpk7o84mh0sywZ0YsbkyRekUA41XBVW0rpcvh+Hd+KHemsfIHAruLu1pEM2Ei5kGe5tkR0ACJ+BiF7FI9O6XkEoEOsqnQDdz2QSWiuAnPCigvYn/omqTlh3L5P+7soZMWB3f61tJlKv1wfmj/FuQr+Z6saNDwvdfgvCMdB6jC8YO2uGKXzw8Zj6cUOxu2gEbE+AVzcYnb11WkywMex3SlCetgfQbdHsHt3EEBOC3m0VAYYXbXig+ItHxhrLWIrb7luJbGy5oQF4C/DxClF9EhuTwkxNOaW/kb6nqLotyh7elDyXdyhjPn/ZFEOq1WzGWN2kIsoWmRxNHFrkgILlgOL8Ye7Yf3zR++FmNhJs/wnhkwkmSHV+peylyQlxsH2Txhqqr/4Yeq/rpdK5laoIZSHU3cQe3bd9584V+pn16pZMYoczjoYt+6fRDyBq8oUbfy8T8QfsPnc5IqZ0lBmWjjR1OiWEuvYKUL+++52lnoLf7kk6RlTF8yIaXA53z2+qe+dqLEydgvZ2WjW+69gW4K68QrYeinUTMKGULnevV+usq6GA4LCaW233oHhtdYF4ODqvYKUDS0W1WcJdAQPO9OpRUgtNWCeA79Tko2P+0BEMFXpKadaUjTlzlawSh/MUDh8AyuikvhoKi5IVLh06+X6w=

@@ -1,0 +1,38 @@
+FROM    adegtyarev/zipline:debian-dev
+
+USER    root
+
+RUN     apt update && \
+        apt install -y \
+            build-essential && \
+        pip3 install --no-cache-dir --no-compile \
+            jupyter \
+            jupyter_contrib_nbextensions \
+            jupyter_nbextensions_configurator && \
+        pip3 install --upgrade six && \
+        apt purge -y \
+            build-essential && \
+        apt autoremove -y && \
+        apt clean && \
+        install -v -d -o $ZIPLINE_USER -g $ZIPLINE_GROUP \
+            /etc/letsencrypt/live \
+            /etc/letsencrypt/archive \
+            /notes && \
+        jupyter contrib \
+            nbextension install --sys-prefix && \
+        jupyter nbextensions_configurator \
+            enable --sys-prefix
+
+COPY    docker-entrypoint.sh /bin/
+
+USER    $ZIPLINE_USER
+
+WORKDIR /notes
+
+VOLUME  ["$ZIPLINE_ROOT", "/notes", "/etc/letsencrypt"]
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+CMD     ["notebook"]
+
+EXPOSE  8888
