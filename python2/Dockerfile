@@ -73,6 +73,8 @@ RUN     apk add --no-cache --virtual .build-deps \
             ca-certificates \
             libstdc++ \
             openblas \
+            # https://github.com/markpfletcher/graphviz-docker/issues/1
+            font-bitstream-type1 \
             py-pip \
             python2 && \
         apk add --no-cache \

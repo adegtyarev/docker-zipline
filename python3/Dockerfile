@@ -72,6 +72,8 @@ RUN     apk add --no-cache --virtual .build-deps \
             ca-certificates \
             libstdc++ \
             openblas \
+            # https://github.com/markpfletcher/graphviz-docker/issues/1
+            font-bitstream-type1 \
             python3 && \
         apk add --no-cache \
             --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
