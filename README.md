@@ -3,11 +3,10 @@
 - Base Docker image with [Zipline][zipline] algorithmic trading library
 - Zipline & [TA-lib][ta-lib] libraries
 - Zipline & additional development modules
-- Zipline in [JupyterLab][jupyterlab] or [Jupyter][jupyter] research environment
+- Zipline in [JupyterLab][jupyterlab] research environment
 
 [ta-lib]: http://ta-lib.org/
 [zipline]: https://github.com/quantopian/zipline
-[jupyter]: http://jupyter.org/
 [jupyterlab]: https://github.com/jupyterlab/jupyterlab
 
 ## Software specification
@@ -24,7 +23,6 @@ Image   | Layers & size
 adegtyarev/zipline:latest  | ![zipline:python3][python3.svg]
 adegtyarev/zipline:talib   | ![zipline:python3-talib][python3-talib.svg]
 adegtyarev/zipline:dev     | ![zipline:python3-dev][python3-dev.svg]
-adegtyarev/zipline:jupyter | ![zipline:python3-jupyter][python3-jupyter.svg]
 adegtyarev/zipline:jupyterlab | ![zipline:python3-jupyterlab][python3-jupyterlab.svg]
 
 [alpinelinux]: https://alpinelinux.org/
@@ -32,7 +30,6 @@ adegtyarev/zipline:jupyterlab | ![zipline:python3-jupyterlab][python3-jupyterlab
 [python3.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3.svg "Image size & number of layers"
 [python3-talib.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3-talib.svg "Image size & number of layers"
 [python3-dev.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3-dev.svg "Image size & number of layers"
-[python3-jupyter.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3-jupyter.svg "Image size & number of layers"
 [python3-jupyterlab.svg]: https://images.microbadger.com/badges/image/adegtyarev/zipline:python3-jupyterlab.svg "Image size & number of layers"
 
 
@@ -75,9 +72,9 @@ Run an example trading algorithm:
 
 ### Research notebook
 
-The image with `jupyter` tag is ready to start a research with Zipline in a
-Jupyter notebook or JupyterLab computational environment (`jupyterlab` tag).
-You will need a volume to store notebooks permanently:
+The image with `jupyterlab` is built with Zipline and JupyterLab computational
+environment. To use the image you will need a permanent volume to store
+notebooks:
 
     docker volume create --name zipline-notes
 
@@ -115,6 +112,14 @@ connect to run a verification procedure.  Use an official image of
         -v zipline-certs:/etc/letsencrypt \
         certbot/certbot certonly --standalone \
         -d $SSL_HOSTNAME --agree-tos -m $SSL_EMAIL --non-interactive
+
+Adjust permissions for a private key file to be able to run under a normal user
+instead of `root`:
+
+    docker run --rm -u root \
+        -v zipline-certs:/etc/letsencrypt \
+        adegtyarev/zipline:jupyterlab \
+        chmod o+r /etc/letsencrypt/archive/$SSL_HOSTNAME/privkey1.pem
 
 A secured JupyterLab should be ready to start now:
 
